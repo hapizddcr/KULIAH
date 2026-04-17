@@ -12,37 +12,40 @@ import java.util.Scanner;
 
 public class latihan3 {
     public static void main(String args[]){
-        Scanner input = new Scanner(System.in);
+       Scanner input = new Scanner(System.in);
 
         int kehadiran, realisasi;
         int tugas, uts, uas;
         double nilaiAkhir, validasi, nilaiKehadiran;
         String grade;
 
-        System.out.print("Masukkan Jumlah Pertemuan: ");
-        realisasi = input.nextInt();
+        
+        realisasi = inputAngka(input, "Jumlah Pertemuan");
+        kehadiran = inputAngka(input, "Kehadiran");
 
-        System.out.print("Masukkan Kehadiran: ");
-        kehadiran = input.nextInt();
+        
+        while (kehadiran > realisasi) {
+            System.out.println("Kehadiran tidak boleh melebihi jumlah pertemuan!");
+            kehadiran = inputAngka(input, "Kehadiran");
+        }
 
-        System.out.print("Masukkan Nilai Tugas: ");
-        tugas = input.nextInt();
+        tugas = inputNilai(input, "Tugas");
+        uts = inputNilai(input, "UTS");
+        uas = inputNilai(input, "UAS");
 
-        System.out.print("Masukkan Nilai UTS: ");
-        uts = input.nextInt();
-
-        System.out.print("Masukkan Nilai UAS: ");
-        uas = input.nextInt();
-
+       
         validasi = realisasi * 75 / 100.0;
 
+        
         nilaiKehadiran = (kehadiran * 100.0) / realisasi;
 
-        nilaiAkhir = (nilaiKehadiran * 0.1) +
-                     (tugas * 0.2) +
-                     (uts * 0.3) +
-                     (uas * 0.4);
+        
+        nilaiAkhir = (nilaiKehadiran * 10 / 100.0) +
+                     (tugas * 20 / 100.0) +
+                     (uts * 30 / 100.0) +
+                     (uas * 40 / 100.0);
 
+        
         if (kehadiran >= validasi) {
             if (nilaiAkhir > 80) grade = "A";
             else if (nilaiAkhir > 70) grade = "B";
@@ -54,6 +57,7 @@ public class latihan3 {
             else grade = "E";
         }
 
+       
         System.out.println("Nilai Akhir: " + nilaiAkhir);
         System.out.println("Grade: " + grade);
 
@@ -62,5 +66,56 @@ public class latihan3 {
         }
 
         input.close();
+    }
+
+    
+    public static int inputAngka(Scanner input, String teks) {
+        String data;
+        int nilai;
+
+        while (true) {
+            System.out.print("Masukkan " + teks + ": ");
+            data = input.next();
+
+            if (!data.matches("[0-9]+")) {
+                System.out.println("Input harus berupa angka!");
+                continue;
+            }
+
+            nilai = Integer.parseInt(data);
+
+            if (nilai < 0) {
+                System.out.println("Angak tidak boleh negatif!");
+            } else {
+                break;
+            }
+        }
+        return nilai;
+    }
+
+    
+    public static int inputNilai(Scanner input, String teks) {
+        String data;
+        int nilai;
+
+        while (true) {
+            System.out.print("Masukkan Nilai " + teks + ": ");
+            data = input.next();
+
+            
+            if (!data.matches("[0-9]+")) {
+                System.out.println("Input harus berupa angka!");
+                continue;
+            }
+
+            nilai = Integer.parseInt(data);
+
+            if (nilai < 0 || nilai > 100) {
+                System.out.println("Nilai harus antara 0 - 100!");
+            } else {
+                break;
+            }
+        }
+        return nilai;
     }
 }
